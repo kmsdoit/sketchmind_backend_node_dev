@@ -5,6 +5,8 @@ const router = express.Router()
 
 const userService = new UserService()
 
-router.post('/user/join', userService.createUser)
+router.get('/api/v1/users', userService.getAllUser)
+router.post('/api/v1/user/login', userService.login)
+router.post('/api/v1/user/join', userService.createUser)
 
 module.exports = router;

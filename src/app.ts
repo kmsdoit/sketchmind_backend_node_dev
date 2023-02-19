@@ -5,9 +5,29 @@ dotenv.config()
 const app = express()
 const PORT = process.env.PORT
 const userRouter = require('./routes/user-route')
+const passport = require('passport');
+import passportConfig from './passport';
+import session from 'express-session';
+import cookieParser from 'cookie-parser';
+
+
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+passportConfig()
+app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(session({
+    resave: false,
+    saveUninitialized: false,
+    secret: process.env.COOKIE_SECRET!,
+    cookie: {
+        httpOnly: true,
+        secure: false,
+    },
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(userRouter);
 
 sequelize.sync({ force: false })
