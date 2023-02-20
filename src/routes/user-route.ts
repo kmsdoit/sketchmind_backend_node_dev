@@ -9,5 +9,6 @@ const userService = new UserService()
 router.get('/api/v1/users',passport.authenticate('jwt', {session : false}), userService.getAllUser)
 router.post('/api/v1/user/login', userService.login)
 router.post('/api/v1/user/join', userService.createUser)
+router.get('/api/v1/user',passport.authenticate('jwt', {session : false}),userService.getUserById)
 
 module.exports = router;

@@ -4,6 +4,7 @@ import Sequelize, {
     NonAttribute,
 } from 'sequelize';
 import {sequelize} from "./index";
+import Profile from './profile'
 
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
     declare id : CreationOptional<number>;
@@ -13,6 +14,7 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
     declare role : string;
     declare phone : string;
     declare sns_type : string;
+    declare refreshToken : string;
     declare createdAt: CreationOptional<Date>;
     declare updatedAt: CreationOptional<Date>;
     declare deletedAt: CreationOptional<Date>;
@@ -49,6 +51,10 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
                 type : Sequelize.STRING(100),
                 allowNull : true
             },
+            refreshToken : {
+                type : Sequelize.STRING(200),
+                allowNull : true
+            },
             createdAt: Sequelize.DATE,
             updatedAt: Sequelize.DATE,
             deletedAt: Sequelize.DATE,
@@ -62,6 +68,10 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
             charset: 'utf8',
             collate: 'utf8_general_ci',
         });
+    }
+
+    static associate() {
+        User.hasMany(Profile);
     }
 }
 

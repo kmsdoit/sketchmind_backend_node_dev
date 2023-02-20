@@ -20,7 +20,7 @@ export class UserService {
         try{
             const user = await User.findAll({
                 attributes : {
-                    exclude : ['password']
+                    exclude : ['password','refreshToken']
                 }
             })
 
@@ -69,7 +69,8 @@ export class UserService {
                 phone,
                 role,
                 sns_type,
-                password : hashedPassword
+                password : hashedPassword,
+                refreshToken : ''
             })
 
             res.status(201).send({
@@ -98,12 +99,11 @@ export class UserService {
                     ...info
                 })
             }
-            return req.login(user, (loginError) => {
+            return req.login(user, async (loginError) => {
                 if (loginError) {
                     console.error(loginError);
                     return next(loginError);
                 }
-                console.log(user)
                 const accessToken = jwt.sign({
                     id : user.id,
                     email: user.email,
@@ -119,6 +119,8 @@ export class UserService {
                     subject : "userInfo"
                 });
 
+                await User.update({refreshToken},{where : { id : user.id}})
+
                 return res.status(200).send({
                     "status" : 200,
                     token : {
@@ -128,5 +130,58 @@ export class UserService {
                 })
             })
         })(req, res, next);
+    }
+
+    async getUserById(req:Request, res:Response, next: NextFunction) {
+        if(req.headers.authorization !== undefined) {
+            const token = req.headers.authorization.split('Bearer ')[1];
+            const userTokenValue = jwt.decode(token)
+
+            const user = await User.findOne({
+                where : {
+                    id : userTokenValue.id
+                },
+                attributes : {
+                    exclude: ['password', 'refreshToken']
+                }
+            })
+
+            if(!user) {
+                return res.status(400).send({
+                    "status" : 400,
+                    "message" : "회원 정보를 찾을 수 없습니다"
+                })
+            }
+
+            return res.status(200).send({
+                "status" : 200,
+                "message" : "조회 결과",
+                "data" : user.dataValues
+            })
+
+        }
+        // const {id} = req.params;
+        //
+        // const user = await User.findOne({
+        //     where : {
+        //         id
+        //     },
+        //     attributes : {
+        //         exclude : ['password','refreshToken']
+        //     }
+        // })
+        //
+        // if(user === null) {
+        //     return res.status(400).send({
+        //         "status" : 400,
+        //         "message" : "회원 정보를 찾을 수 없습니다"
+        //     })
+        // }
+        //
+        // return res.status(200).send({
+        //     "status" : 200,
+        //     "message" : "조회 결과",
+        //     "data" : user.dataValues
+        // })
     }
 }
