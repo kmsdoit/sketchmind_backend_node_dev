@@ -10,6 +10,9 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
     declare email : string;
     declare name : string;
     declare password : string;
+    declare role : string;
+    declare phone : string;
+    declare sns_type : string;
     declare createdAt: CreationOptional<Date>;
     declare updatedAt: CreationOptional<Date>;
     declare deletedAt: CreationOptional<Date>;
@@ -33,6 +36,18 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
             password: {
                 type: Sequelize.STRING(100),
                 allowNull: true,
+            },
+            role : {
+                type : Sequelize.STRING(100),
+                allowNull : true,
+            },
+            phone : {
+                type : Sequelize.STRING(100),
+                allowNull : true,
+            },
+            sns_type : {
+                type : Sequelize.STRING(100),
+                allowNull : true
             },
             createdAt: Sequelize.DATE,
             updatedAt: Sequelize.DATE,

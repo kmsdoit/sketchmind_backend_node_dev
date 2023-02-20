@@ -5,19 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8313a4f5-ffb6-4870-829f-1d1d224e4bcb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jest.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/passport/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/passport/localStrategy.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/user.test.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/index.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/auth-jwt.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/jwt-util.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/redis.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c83e0df6-aa10-44f3-98d9-2f193b07c557.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c83e0df6-aa10-44f3-98d9-2f193b07c557/storage_v2/_src_/database/sketchmind_node.o7s6VQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c83e0df6-aa10-44f3-98d9-2f193b07c557/storage_v2/_src_/database/sketchmind_node.o7s6VQ/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c83e0df6-aa10-44f3-98d9-2f193b07c557/storage_v2/_src_/database/sketchmind_node.o7s6VQ/schema/pg_catalog.0S1ZNQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c83e0df6-aa10-44f3-98d9-2f193b07c557/storage_v2/_src_/database/sketchmind_node.o7s6VQ/schema/public.abK9xQ.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/user.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/passport/localStrategy.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/passport/localStrategy.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/user-route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/user-route.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/user.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +122,9 @@
       <workItem from="1676644525076" duration="287000" />
       <workItem from="1676644815777" duration="107000" />
       <workItem from="1676644924937" duration="2436000" />
-      <workItem from="1676848063765" duration="2162000" />
+      <workItem from="1676848063765" duration="2208000" />
+      <workItem from="1676893407339" duration="6183000" />
+      <workItem from="1676900270517" duration="1127000" />
     </task>
     <servers />
   </component>

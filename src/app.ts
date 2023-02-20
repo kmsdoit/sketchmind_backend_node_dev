@@ -11,6 +11,13 @@ import session from 'express-session';
 import cookieParser from 'cookie-parser';
 
 
+sequelize.sync({ force: false })
+    .then(() => {
+        console.log('데이터베이스 연결 성공');
+    })
+    .catch((err) => {
+        console.error(err);
+    });
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -25,18 +32,12 @@ app.use(session({
         secure: false,
     },
 }));
-
+//
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(userRouter);
 
-sequelize.sync({ force: false })
-    .then(() => {
-        console.log('데이터베이스 연결 성공');
-    })
-    .catch((err) => {
-        console.error(err);
-    });
+
 
 app.listen(PORT, () => {
     console.log(`----------------- your server listening on port : ${PORT} --------------------`);
