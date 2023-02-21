@@ -6,6 +6,7 @@ import passport from 'passport';
 const redisClient = require('../utils/redis')
 const jwt = require('jsonwebtoken')
 
+
 const postUserSchema = Joi.object({
     name: Joi.string().required(),
     email: Joi.string().email().required(),
@@ -14,7 +15,17 @@ const postUserSchema = Joi.object({
     role: Joi.string().required(),
     sns_type : Joi.string().required(),
 });
-export class UserService {
+
+const updateUserSchema = Joi.object({
+    name : Joi.string().required(),
+    email : Joi.string().required(),
+    password : Joi.string().required(),
+    phone : Joi.string().required()
+})
+
+export class UserService{
+
+
 
     async getAllUser(req:Request, res:Response, next: NextFunction) {
         try{
@@ -113,6 +124,7 @@ export class UserService {
                     issuer : "sketchmind",
                     subject : "userInfo"
                 });
+
                 const refreshToken = jwt.sign({}, process.env.JWT_SECRET, {
                     expiresIn: "1d",
                     issuer : "sketchmind",
@@ -135,11 +147,11 @@ export class UserService {
     async getUserById(req:Request, res:Response, next: NextFunction) {
         if(req.headers.authorization !== undefined) {
             const token = req.headers.authorization.split('Bearer ')[1];
-            const userTokenValue = jwt.decode(token)
+            const tokenDecoder = jwt.decode(token)
 
             const user = await User.findOne({
                 where : {
-                    id : userTokenValue.id
+                    id : tokenDecoder.id
                 },
                 attributes : {
                     exclude: ['password', 'refreshToken']
@@ -158,30 +170,56 @@ export class UserService {
                 "message" : "조회 결과",
                 "data" : user.dataValues
             })
-
         }
-        // const {id} = req.params;
-        //
-        // const user = await User.findOne({
-        //     where : {
-        //         id
-        //     },
-        //     attributes : {
-        //         exclude : ['password','refreshToken']
-        //     }
-        // })
-        //
-        // if(user === null) {
-        //     return res.status(400).send({
-        //         "status" : 400,
-        //         "message" : "회원 정보를 찾을 수 없습니다"
-        //     })
-        // }
-        //
-        // return res.status(200).send({
-        //     "status" : 200,
-        //     "message" : "조회 결과",
-        //     "data" : user.dataValues
-        // })
+    }
+
+    async updateUserById(req:Request, res:Response, next: NextFunction){
+        if(req.headers.authorization !== undefined) {
+            const {email, password, name, phone} = await updateUserSchema.validateAsync(req.body)
+            const token = req.headers.authorization.split('Bearer ')[1];
+            const tokenDecoder = jwt.decode(token)
+
+            const user = await User.findOne({
+                where : {
+                    id : tokenDecoder.id
+                },
+                attributes : {
+                    exclude: ['refreshToken','role','sns_type','createdAt','updatedAt','deletedAt']
+                }
+            })
+
+            if(!user) {
+                return res.status(400).send({
+                    "status" : 400,
+                    "message" : "회원 정보를 찾을 수 없습니다"
+                })
+            }
+
+            const hashedPassword = await bcrypt.hash(password, 12);
+
+
+            try {
+                await User.update({
+                    email,
+                    password : hashedPassword,
+                    name,
+                    phone
+                },{
+                    where : {
+                        id : user.dataValues.id
+                    }
+                })
+
+                return res.status(200).send({
+                    "status" : 200,
+                    "message" : "계정 정보가 변경 되었습니다"
+                })
+            }catch (error : any) {
+                return res.status(400).send({
+                    "status" : 400,
+                    "message" : error
+                })
+            }
+        }
     }
 }

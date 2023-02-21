@@ -5,13 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8313a4f5-ffb6-4870-829f-1d1d224e4bcb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/models/profile.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/31a2f9a3-6ce0-418e-8aeb-b766e0e603cc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/31a2f9a3-6ce0-418e-8aeb-b766e0e603cc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/31a2f9a3-6ce0-418e-8aeb-b766e0e603cc/storage_v2/_src_/database/sketchmind_node.o7s6VQ/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/31a2f9a3-6ce0-418e-8aeb-b766e0e603cc/storage_v2/_src_/database/sketchmind_node.o7s6VQ/schema/public.abK9xQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/user.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/passport/localStrategy.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/passport/localStrategy.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/user-route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/user-route.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/user.service.ts" afterDir="false" />
     </list>
@@ -116,7 +110,8 @@
       <workItem from="1676848063765" duration="2208000" />
       <workItem from="1676893407339" duration="6183000" />
       <workItem from="1676900270517" duration="1177000" />
-      <workItem from="1676928781972" duration="6062000" />
+      <workItem from="1676928781972" duration="6175000" />
+      <workItem from="1677020622755" duration="2242000" />
     </task>
     <servers />
   </component>
