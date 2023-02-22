@@ -5,6 +5,7 @@ dotenv.config()
 const app = express()
 const PORT = process.env.PORT
 const userRouter = require('./routes/user-route')
+const profileRouter = require('./routes/profile.route')
 const passport = require('passport');
 import passportConfig from './passport';
 import session from 'express-session';
@@ -36,6 +37,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(userRouter);
+app.use(profileRouter);
 
 
 

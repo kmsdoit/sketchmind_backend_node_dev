@@ -2,9 +2,9 @@ import {Request,Response,NextFunction} from "express";
 import User from "../models/user";
 const bcrypt = require('bcrypt');
 import Joi from 'joi'
+const jwt = require('jsonwebtoken')
 import passport from 'passport';
 const redisClient = require('../utils/redis')
-const jwt = require('jsonwebtoken')
 
 
 const postUserSchema = Joi.object({
@@ -25,33 +25,55 @@ const updateUserSchema = Joi.object({
 
 export class UserService{
 
-
-
     async getAllUser(req:Request, res:Response, next: NextFunction) {
         try{
-            const user = await User.findAll({
-                attributes : {
-                    exclude : ['password','refreshToken']
-                }
-            })
+                if(req.headers.authorization !== undefined) {
+                    const token = req.headers.authorization.split('Bearer ')[1];
+                    const tokenDecoder = jwt.decode(token)
 
-            if(user.length === 0) {
-                res.status(400).send({
-                    "status" : 400,
-                    "message" : "유저 전체를 조회 할 수 없습니다"
+                    const user = await User.findOne({
+                        where : {
+                            id : tokenDecoder.id,
+                            role : tokenDecoder.role
+                        },
+                        attributes : {
+                            exclude: ['password', 'refreshToken']
+                        }
+                    })
+
+                    if(user!.dataValues.role !== 'ADMIN') {
+                        res.status(400).send({
+                            "status" : 400,
+                            "message" : "계정 권한이 없습니다"
+                        })
+                        return
+                    }
+
+
+                    const userAll = await User.findAll({
+                        attributes : {
+                            exclude : ['password','refreshToken']
+                        }
+                    })
+
+                    if(userAll.length === 0) {
+                        res.status(400).send({
+                            "status" : 400,
+                            "message" : "유저 전체를 조회 할 수 없습니다"
+                        })
+                        return
+                    }
+                    return res.status(200).send({
+                        "status" : 200,
+                        "message" : "success",
+                        "data" : userAll
+                    })
+                }
+            }catch (error) {
+                return res.status(500).send({
+                    "status": 500,
+                    "message": error
                 })
-                return
-            }
-            return res.status(200).send({
-                "status" : 200,
-                "message" : "success",
-                "data" : user
-            })
-        }catch (error) {
-            return res.status(500).send({
-                "status" : 500,
-                "message" : error
-            })
             next(error)
         }
     }
@@ -220,6 +242,36 @@ export class UserService{
                     "message" : error
                 })
             }
+        }
+    }
+
+    async deleteUserById(req:Request, res:Response, next: NextFunction){
+        if(req.headers.authorization !== undefined) {
+            const token = req.headers.authorization.split('Bearer ')[1];
+            const tokenDecoder = jwt.decode(token)
+
+            const user = await User.findOne({
+                where : {
+                    id : tokenDecoder.id
+                },
+                attributes : {
+                    exclude: ['password', 'refreshToken']
+                }
+            })
+
+            if(!user) {
+                return res.status(400).send({
+                    "status" : 400,
+                    "message" : "회원 정보를 찾을 수 없습니다"
+                })
+            }
+
+            User.destroy({where:{id: user.id}})
+
+            return res.status(200).send({
+                "status" : 200,
+                "message" : "유저가 삭제되었습니다",
+            })
         }
     }
 }
